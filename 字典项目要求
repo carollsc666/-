@@ -1,0 +1,62 @@
+软件项目开发流程
+
+需求分析－－概要设计－－项目规划－－详细设计－－编码测试
+－－项目功能测试－－调试完善－－项目发布－－后期维护
+
+电子词典
+
+功能说明：
+１．用户可以登录和注册
+　　　登录凭借用户名和密码即可
+　　　登录要求用户必须填写用户名和密码等其他内容
+　　　用名户要求不能重复
+
+２．用户数据要求使用数据库长期保存
+　　　数据库自定
+
+３．能够满足多个用户同时登录操作的要求
+
+４．功能分为客户端和服务端，客户端主要发起请求，服务端处理请求，用户启动服务端即进入一级界面
+
+５．用户登陆后即可进入二级界面
+　　　查单词　　　查看历史记录　　退出
+
+　　查单词：输入单词，显示单词意思，也可以循环查询，
+　　　　　　　　输入##退出查词
+　　查看历史记录：查看当前用户的历史查词记录
+　　　name word time
+ 退出：　退出到一级界面，相当于注销
+
+
+工作流程：创建数据库，存储数据　－－》　搭建通信架构
+　　　　　　　　建立并发关系　－－－》实现具体功能封装
+
+１．搭建数据库存储数据
+　　dict 
+  user: id   name   passwd
+  hist: id   name   word     time
+  words:id   word   interpret
+
+  mysql> create database dict default charset=utf8;
+
+  mysql> create table user (
+    -> id int primary key auto_increment,
+    -> name varchar(32) not null,
+    -> passwd varchar(16) default '000000');
+
+  mysql> create table hist (
+    -> id int auto_increment primary key,
+    -> name varchar(32) not null,
+    -> word varchar(32) not null,
+    -> time varchar(64));
+
+  mysql> create table words 
+    -> (id int auto_increment primary key,
+    -> word varchar(32) not null,
+    -> interpret text not null);
+  
+   插入到words数据库　见dict_insert.py
+
+
+２．搭建网络通信服务
+
